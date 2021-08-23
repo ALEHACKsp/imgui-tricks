@@ -118,7 +118,7 @@ namespace ImTricks {
 		// Responsible for adding notifications to the display queue.
 		//
 		//	if (ImGui::Button("Create Notify", { 120, 25 }))
-		//		ImTricks::NotifyManager::AddNotify("The notification was displayed successfully.", ImTricks::ImTrickNotify_Success);
+		//		ImTricks::NotifyManager::AddNotify("The notification was displayed successfully.", ImTrickNotify_Success);
 		*/
 		inline void AddNotify(const char* message, NotifyState state) {
 			notifies.push_back({ message, state, GetTickCount64() + duration });
