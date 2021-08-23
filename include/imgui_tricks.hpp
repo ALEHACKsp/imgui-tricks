@@ -5,6 +5,7 @@
 #include <algorithm>
 
 #include <imgui.h>
+#define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui_internal.h>
 
 #ifndef IMGUI_TRICK_ONCE
@@ -102,12 +103,15 @@ namespace ImTricks {
 		}
 	}
 
+	/*
+	// The NotifyManager namespace contains everything you need to easily create notifications in your interface.
+	*/
 	namespace NotifyManager {
 
 		struct NotifyStruct {
 			const char* message;
 			NotifyState state;
-			unsigned __int64 time;
+			ULONGLONG time;
 		};
 
 		std::vector<NotifyStruct> notifies;
@@ -137,14 +141,16 @@ namespace ImTricks {
 				return;
 
 			const auto ScreenSize = ImGui::GetIO().DisplaySize;
-			ImVec2 NotifyPos = ImVec2(ScreenSize.x - 300 - 20.f, ScreenSize.y - 30 - 20.f);
+			ImVec2 NotifyPos = ScreenSize - ImVec2(320.f, 50.f);
 
 			auto DrawNotify = [&draw, &NotifyPos](NotifyStruct notify) {
 
-				const auto NotifyEndPos = ImVec2(NotifyPos.x + 300, NotifyPos.y + 30);
+				const auto NotifyEndPos = NotifyPos + ImVec2(300, 30);
+
 				draw->AddRectFilled(NotifyPos, NotifyEndPos, ImGui::GetColorU32(ImGuiCol_PopupBg), ImGui::GetStyle().PopupRounding);
 
 				auto StateColor = ImColor(45, 45, 45);
+
 				switch (notify.state) {
 				case ImTrickNotify_Success: StateColor = ImColor(0, 255, 0); break;
 				case ImTrickNotify_Warning: StateColor = ImColor(130, 255, 0); break;
@@ -157,10 +163,10 @@ namespace ImTricks {
 
 				draw->AddRectFilled(NotifyPos, ImVec2(NotifyPos.x + 5.f, NotifyPos.y + 30), StateColor, 1.f);
 
-				const auto text_size = ImGui::CalcTextSize(notify.message);
-				const auto text_pos = ImVec2(NotifyPos.x + 5.f + 10.f, NotifyPos.y + 30 / 2.f - text_size.y / 2.f);
+				const auto TextSize = ImGui::CalcTextSize(notify.message);
+				const auto TextPos = NotifyPos + ImVec2(15.f, 15.f - TextSize.y / 2.f);
 
-				draw->AddText(text_pos, ImGui::GetColorU32(ImGuiCol_Text), notify.message);
+				draw->AddText(TextPos, ImGui::GetColorU32(ImGuiCol_Text), notify.message);
 
 				NotifyPos.y -= 40.f;
 			};
@@ -172,7 +178,25 @@ namespace ImTricks {
 				DrawNotify(notify);
 			}
 		}
+	}
 
+
+	namespace Widgets {
+
+		// I don't understand why ocornut didn't add ImColor support to ColorEdit.
+		inline void ColorEdit3(const char* label, ImColor& color, ImGuiColorEditFlags flags) {
+			static float col[3] = { color.Value.x, color.Value.y, color.Value.z };
+
+			if (ImGui::ColorEdit3(label, col, flags))
+				color = ImColor(col[0], col[1], col[2]);
+		}
+
+		inline void ColorEdit4(const char* label, ImColor& color, ImGuiColorEditFlags flags) {
+			static float col[4] = { color.Value.x, color.Value.y, color.Value.z , color.Value.w };
+
+			if (ImGui::ColorEdit4(label, col, flags))
+				color = ImColor(col[0], col[1], col[2], col[3]);
+		}
 	}
 }
 
