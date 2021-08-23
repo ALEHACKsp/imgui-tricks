@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+.vs/imgui-tricks/v16/.suo
+.vs/imgui-tricks/v16/Browse.VC.db
+.vs/imgui-tricks/v16/Browse.VC.db-shm
+.vs/imgui-tricks/v16/Browse.VC.db-wal
+.vs/imgui-tricks/v16/Browse.VC.opendb
+.vs/imgui-tricks/v16/ipch/AutoPCH/b5709fa89e9c6762/IMGUI.ipch
+.vs/ProjectSettings.json
+.vs/slnx.sqlite
