@@ -1,6 +1,6 @@
 # ImTricks
 
-ImTricks is a collection of useful functions for expanding / improving the functionality of the ImG ui.
+ImTricks is a collection of useful functions for expanding / improving the functionality of the ImGui.
 
 At the moment it has in itself:
 * Functions to speed up the creation of animations.
