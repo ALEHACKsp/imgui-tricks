@@ -5,6 +5,7 @@ ImTricks is a collection of useful functions for expanding / improving the funct
 At the moment it has in itself:
 * Functions to speed up the creation of animations.
 * Functions for creating and displaying notifications.
+* Widgets that are missing in the standard ImGui.
 
 # Notifies Usage
 
@@ -38,3 +39,15 @@ void RenderMyGUI() {
 
 ```
 
+# Widgets Usage
+
+```cpp
+
+void RenderMyGUI() {
+   ...
+   static ImColor col = ImColor(23, 23, 23);
+   ImTricks::Widgets::ColorEdit4("test", col, NULL);
+   ...
+}
+
+```
